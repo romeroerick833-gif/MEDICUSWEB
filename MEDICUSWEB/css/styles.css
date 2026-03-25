@@ -1,0 +1,969 @@
+/* ============================================
+   VARIABLES DE COLOR — Paleta Oficial Medicus
+   ============================================ */
+:root {
+  /* Colores Primarios */
+  --azul-oscuro:  #001f3f;   /* Fondos principales: hero, footer, top bar */
+  --teal:         #2DA198;   /* Acento principal: etiquetas, subrayados, íconos */
+  --teal-claro:   #8FDBD7;   /* Acento suave: hover fondos, bordes light */
+
+  /* Colores Secundarios */
+  --rosa:         #e9426e;   /* CTA fuerte: botones principales, stat-line */
+  --coral:        #ff5e4c;   /* CTA hover: hover de botones */
+  --crema:        #f4f1ea;   /* Fondos cálidos: stats, lab, ubicación */
+
+  /* Neutros */
+  --blanco:       #ffffff;
+  --gris-suave:   #d5dce1;   /* Fondos neutros: servicios, testimonios */
+
+  /* Variables de Diseño */
+  --sombra-suave:  0 4px 15px rgba(13, 69, 120, 0.08);
+  --sombra-media:  0 10px 30px rgba(13, 69, 120, 0.12);
+  --sombra-fuerte: 0 20px 50px rgba(13, 69, 120, 0.18);
+  --radio-sm:  8px;
+  --radio-md:  14px;
+  --radio-lg:  20px;
+
+  --top-bar-height: 45px;
+  --navbar-height:  90px;
+}
+
+/* ============================================
+   FUENTES PERSONALIZADAS
+   ============================================ */
+@font-face {
+  font-family: 'PlusJakarta';
+  src: url('../fonts/PlusJakartaSans_wght_.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'PlusJakarta';
+  src: url('../fonts/PlusJakartaSans-Italic_wght_.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ============================================
+   RESET Y ESTILOS GLOBALES
+   ============================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--top-bar-height) + var(--navbar-height));
+}
+
+body {
+  font-family: 'PlusJakarta', sans-serif;
+  background-color: var(--blanco);
+  color: var(--azul-oscuro);
+  padding-top: calc(var(--top-bar-height) + var(--navbar-height));
+}
+
+/* ============================================
+   PRELOADER
+   ============================================ */
+#preloader {
+  position: fixed; inset: 0; z-index: 99999;
+  background-color: var(--azul-oscuro);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 30px;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader.oculto { opacity: 0; visibility: hidden; }
+
+.preloader-logo {
+  height: 400px; width: auto;
+  filter: brightness(0) invert(1);
+  animation: preloaderPulse 1.5s ease-in-out infinite;
+}
+
+.preloader-spinner {
+  width: 40px; height: 40px;
+  border: 3px solid rgba(255,255,255,0.15);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: preloaderSpin 0.8s linear infinite;
+}
+
+@keyframes preloaderSpin { to { transform: rotate(360deg); } }
+@keyframes preloaderPulse {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1; }
+}
+
+/* ============================================
+   TOP BAR
+   ============================================ */
+#top-bar {
+  background-color: var(--azul-oscuro);
+  color: var(--blanco);
+  font-size: 0.85rem; padding: 10px 0;
+  position: fixed; top: 0; left: 0; width: 100%;
+  z-index: 1001; transition: transform 0.4s ease;
+}
+
+#top-bar.top-bar-oculto { transform: translateY(-100%); }
+
+.top-bar-contenedor {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 2rem;
+}
+
+.top-redes { display: flex; gap: 15px; align-items: center; }
+.top-redes a { color: var(--blanco); font-size: 1.1rem; transition: color 0.3s; }
+.top-redes a:hover { color: var(--teal-claro); }
+
+.top-info { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
+.top-info i { color: var(--teal-claro); }
+
+/* ============================================
+   NAVBAR
+   ============================================ */
+#navbar {
+  position: fixed; top: var(--top-bar-height); left: 0; width: 100%;
+  background-color: var(--blanco); z-index: 1000;
+  box-shadow: var(--sombra-suave); transition: all 0.4s ease;
+}
+
+#navbar.nav-scrolled { top: 0; box-shadow: var(--sombra-media); }
+
+.nav-contenedor {
+  max-width: 1320px; margin: 0 auto; padding: 0 2rem;
+  height: var(--navbar-height); display: flex;
+  align-items: center; justify-content: space-between;
+  transition: height 0.4s ease;
+}
+
+#navbar.nav-scrolled .nav-contenedor { height: 75px; }
+
+.nav-logo { display: flex; align-items: center; gap: 20px; text-decoration: none; }
+
+.nav-logo img {
+  height: 250px; width: auto;
+  margin-top: 10px;
+  transition: transform 0.4s ease; transform-origin: left center;
+}
+
+#navbar.nav-scrolled .nav-logo img { transform: scale(0.85); }
+
+.nav-menu { display: flex; justify-content: center; flex: 1; }
+
+.nav-menu ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+
+.nav-menu a {
+  color: var(--azul-oscuro); text-decoration: none;
+  font-family: 'PlusJakarta', sans-serif;
+  font-size: 1.05rem; font-weight: 600;
+  padding: 10px 0; transition: color 0.3s; position: relative;
+}
+
+.nav-menu a::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 2px; background-color: var(--teal); transition: width 0.3s;
+}
+
+.nav-menu a:hover, .nav-menu a.activo { color: var(--teal); }
+.nav-menu a:hover::after, .nav-menu a.activo::after { width: 100%; }
+
+.nav-toggle {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 8px;
+}
+
+.nav-toggle span {
+  display: block; width: 26px; height: 2px;
+  background-color: var(--azul-oscuro); border-radius: 2px; transition: all 0.3s;
+}
+
+.nav-derecha { display: flex; align-items: center; gap: 1.2rem; }
+
+.nav-btn {
+  background-color: var(--rosa); color: var(--blanco);
+  font-family: 'PlusJakarta', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  padding: 0.75rem 1.8rem; border-radius: var(--radio-sm);
+  text-decoration: none; transition: background-color 0.3s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.nav-btn:hover { background-color: var(--coral); transform: scale(1.04); }
+
+/* ============================================
+   HERO CON VIDEO
+   ============================================ */
+#hero-moderno {
+  position: relative; background-color: var(--azul-oscuro);
+  min-height: 100vh; overflow: hidden; padding-bottom: 0;
+}
+
+.hero-bg-video {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+}
+
+.hero-bg-video video {
+  width: 100%; height: 100%; object-fit: cover; object-position: 10% 85%;
+}
+
+.hero-filtro-oscuro {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
+  background: linear-gradient(
+    to right,
+    rgba(13, 69, 120, 0.70) 0%,
+    rgba(13, 69, 120, 0.45)  40%,
+    rgba(13, 69, 120, 0.15)  60%,
+    rgba(13, 69, 120, 0)    100%
+  );
+}
+
+.hero-texto {
+  position: absolute; bottom: 60px; left: 4%; z-index: 3;
+  text-align: left; width: 60%; max-width: 800px; color: var(--blanco);
+  opacity: 0; transform: translateX(-30px);
+  animation: fadeInLeft 0.9s ease 0.2s forwards;
+  display: flex; flex-direction: column;
+}
+
+.hero-titulo-fusion {
+  font-family: 'PlusJakarta', sans-serif;
+  font-size: 1rem; line-height: 1; margin-bottom: 15px;
+}
+
+.titulo-bold { font-size: 4rem; font-weight: 800; display: inline; }
+.titulo-light { font-size: 3.8rem; font-weight: 300; display: inline; }
+
+.hero-subtitulo {
+  font-family: 'PlusJakarta', sans-serif;
+  font-size: 1.1rem; font-weight: 400;
+  color: rgba(255,255,255,0.8); line-height: 1.6;
+  max-width: 500px; margin-bottom: 20px;
+}
+
+.hero-btn-outline {
+  display: inline-block; margin-top: 30px;
+  background-color: transparent; border: 2px solid var(--blanco);
+  color: var(--blanco); font-family: 'PlusJakarta', sans-serif;
+  font-size: 1rem; font-weight: 700;
+  padding: 0.9rem 2.8rem; border-radius: var(--radio-sm);
+  text-decoration: none; letter-spacing: 1px; white-space: nowrap;
+  transition: all 0.3s ease; align-self: flex-start;
+}
+
+.hero-btn-outline:hover {
+  background-color: var(--teal); border-color: var(--teal); color: var(--blanco);
+}
+
+/* ============================================
+   EJES PRINCIPALES — Crema
+   ============================================ */
+#ejes-principales { background-color: var(--crema); padding: 60px 0; }
+
+.stats-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+}
+
+.stat-item {
+  text-align: center; padding: 20px 24px; position: relative;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.stat-item.visible         { opacity: 1; transform: translateY(0); }
+.stat-item:nth-child(2)    { transition-delay: 0.15s; }
+.stat-item:nth-child(3)    { transition-delay: 0.30s; }
+.stat-item:nth-child(4)    { transition-delay: 0.45s; }
+
+.stat-item:not(:last-child)::after {
+  content: ''; position: absolute; right: 0; top: 20%;
+  height: 60%; width: 1px; background: rgba(13,69,120,0.15);
+}
+
+.stat-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  background-color: var(--blanco);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px; font-size: 22px; color: var(--teal);
+  transition: transform 0.3s; box-shadow: var(--sombra-suave);
+}
+
+.stat-item:hover .stat-icon { transform: scale(1.1); }
+
+.stat-num {
+  font-family: 'PlusJakarta', sans-serif; font-size: 42px; font-weight: 800;
+  color: var(--azul-oscuro); line-height: 1; margin-bottom: 6px; letter-spacing: -1px;
+}
+
+.stat-label {
+  font-family: 'PlusJakarta', sans-serif; font-size: 13px;
+  color: rgba(13,69,120,0.5); margin-bottom: 6px;
+}
+
+.stat-title {
+  font-family: 'PlusJakarta', sans-serif; font-size: 14px;
+  font-weight: 600; color: rgba(13,69,120,0.85);
+}
+
+.stat-line {
+  width: 28px; height: 2px; border-radius: 2px;
+  margin: 10px auto 0; background-color: var(--teal);
+}
+
+/* ============================================
+   CLASES TIPOGRÁFICAS GLOBALES
+   ============================================ */
+.servicios-etiqueta {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 3px; color: var(--teal);
+  text-transform: uppercase; margin-bottom: 10px;
+}
+
+.servicios-titulo {
+  font-family: 'PlusJakarta', sans-serif; font-size: 2.5rem; font-weight: 800;
+  color: var(--azul-oscuro); margin-bottom: 15px;
+}
+
+.servicios-titulo span { color: var(--teal); }
+
+.servicios-subtitulo {
+  font-family: 'PlusJakarta', sans-serif; font-size: 1.05rem;
+  color: rgba(13,69,120,0.65); max-width: 600px;
+  margin: 15px 0 0 0; text-align: left; line-height: 1.6;
+}
+
+.servicios-header {
+  margin-bottom: 50px; position: relative; padding-left: 24px;
+  display: flex; flex-direction: column; align-items: flex-start;
+}
+
+.servicios-header::before {
+  content: ''; position: absolute; left: 0; top: 5px; bottom: 5px;
+  width: 5px; background-color: var(--rosa); border-radius: 4px;
+}
+
+/* ============================================
+   SERVICIOS MÉDICOS — Split Screen / Gris Suave
+   ============================================ */
+#servicios { background-color: var(--gris-suave); }
+
+.servicios-split {
+  display: grid; grid-template-columns: 1.2fr 1.4fr; min-height: 600px;
+}
+
+.servicios-imagen { position: relative; overflow: hidden; min-height: 500px; }
+
+.servicios-imagen img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 15% center; transition: transform 0.6s ease;
+}
+
+#servicios:hover .servicios-imagen img { transform: scale(1.03); }
+
+.servicios-imagen-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(13,69,120,0.88) 0%, rgba(13,69,120,0.4) 45%, transparent 100%
+  );
+  z-index: 1;
+}
+
+.servicios-imagen-contenido {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 40px 36px; z-index: 2;
+}
+
+.servicios-imagen-contenido .servicios-etiqueta { color: var(--teal-claro); margin-bottom: 10px; }
+.servicios-imagen-contenido .servicios-titulo { color: var(--blanco); font-size: 2.2rem; margin-bottom: 14px; }
+.servicios-imagen-contenido .servicios-titulo span { color: var(--teal-claro); }
+
+.servicios-imagen-desc {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.95rem;
+  color: rgba(255,255,255,0.85); line-height: 1.7; max-width: 340px;
+}
+
+.servicios-cards {
+  padding: 48px 40px; background-color: var(--gris-suave);
+  display: flex; align-items: center;
+}
+
+.servicios-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%;
+}
+
+.servicio-card {
+  background-color: var(--blanco); border: 1px solid rgba(13,69,120,0.07);
+  border-radius: var(--radio-md); padding: 22px 16px; text-align: center;
+  transition: all 0.3s ease;
+}
+
+.servicio-card:hover {
+  transform: translateY(-5px); box-shadow: var(--sombra-media);
+  border-color: var(--teal);
+}
+
+.servicio-card-icono {
+  width: 48px; height: 48px; border-radius: 50%;
+  background-color: var(--azul-oscuro);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px; font-size: 1.2rem; color: var(--blanco);
+  transition: background-color 0.3s;
+}
+
+.servicio-card:hover .servicio-card-icono { background-color: var(--teal); }
+
+.servicio-card h3 {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.9rem; font-weight: 700;
+  color: var(--azul-oscuro); margin-bottom: 6px; line-height: 1.3;
+}
+
+.servicio-card p {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.8rem;
+  color: rgba(13,69,120,0.6); line-height: 1.5;
+}
+
+/* ============================================
+   LABORATORIO CLÍNICO — Crema
+   ============================================ */
+#laboratorio {
+  padding: 100px 0; background-color: var(--crema);
+  position: relative; overflow: hidden;
+}
+
+.lab-contenedor {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; gap: 80px;
+}
+
+.lab-contenido { flex: 1.2; display: flex; flex-direction: column; gap: 30px; }
+.lab-textos { text-align: left; }
+.lab-textos .servicios-titulo { font-size: 2.8rem; margin-bottom: 15px; color: var(--azul-oscuro); }
+.lab-textos .servicios-titulo span { color: var(--teal); }
+
+.lab-descripcion {
+  font-family: 'PlusJakarta', sans-serif; font-size: 1.05rem;
+  color: rgba(13,69,120,0.65); line-height: 1.8; max-width: 500px;
+}
+
+.lab-grid-interactive {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%;
+}
+
+.lab-card-interactive {
+  background-color: var(--blanco); border: 1px solid rgba(13,69,120,0.07);
+  border-radius: var(--radio-sm); padding: 18px 14px; text-align: center;
+  transition: all 0.3s ease; cursor: pointer; contain: content;
+}
+
+.lab-card-interactive:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--sombra-media); border-color: var(--teal);
+}
+
+.lab-card-icono {
+  width: 44px; height: 44px; border-radius: 50%;
+  background-color: var(--azul-oscuro);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px; font-size: 1.1rem; color: var(--blanco);
+  transition: background-color 0.3s;
+}
+
+.lab-card-interactive:hover .lab-card-icono { background-color: var(--teal); }
+
+.lab-card-nombre {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.9rem; font-weight: 700;
+  color: var(--azul-oscuro); margin-bottom: 5px; line-height: 1.2;
+}
+
+.lab-card-desc {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.75rem;
+  color: rgba(13,69,120,0.6); line-height: 1.4;
+}
+
+.lab-cta { text-align: left; margin-top: 10px; }
+
+.lab-btn {
+  display: inline-block; background-color: var(--rosa); color: var(--blanco);
+  font-family: 'PlusJakarta', sans-serif; font-size: 1rem; font-weight: 700;
+  padding: 0.9rem 2.8rem; border-radius: var(--radio-sm);
+  text-decoration: none; transition: background-color 0.3s, transform 0.2s;
+}
+
+.lab-btn:hover { background-color: var(--coral); transform: scale(1.04); }
+
+.lab-portada { flex: 1; position: relative; }
+
+.lab-portada img {
+  width: 100%; height: 520px; object-fit: cover;
+  border-radius: var(--radio-md); box-shadow: var(--sombra-media);
+  transition: transform 0.4s ease;
+}
+
+.lab-portada:hover img { transform: scale(1.02); }
+
+/* ============================================
+   CASOS CLÍNICOS — Bento Grid / Blanco
+   ============================================ */
+#casos { padding: 100px 0; background-color: var(--blanco); }
+
+.casos-contenedor { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+.casos-bento-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 30px; margin-top: 40px;
+}
+
+.caso-card {
+  background-color: var(--blanco); border: 1px solid var(--gris-suave);
+  border-radius: var(--radio-lg); overflow: hidden;
+  box-shadow: var(--sombra-suave);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  display: flex; flex-direction: column; contain: layout;
+}
+
+.caso-card:hover {
+  transform: translateY(-8px); box-shadow: var(--sombra-media);
+  border-color: var(--teal-claro);
+}
+
+.caso-video {
+  width: 100%; background-color: #000; overflow: hidden; position: relative;
+}
+
+.caso-vertical .caso-video  { aspect-ratio: 3 / 4; }
+.caso-horizontal .caso-video { aspect-ratio: 16 / 9; }
+
+.caso-video video { width: 100%; height: 100%; object-fit: cover; }
+
+.caso-play-btn {
+  position: absolute; bottom: 14px; right: 14px;
+  width: 42px; height: 42px; border-radius: 50%;
+  border: none; background-color: rgba(13,69,120,0.65);
+  color: var(--blanco); font-size: 0.9rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 2; backdrop-filter: blur(4px);
+}
+
+.caso-play-btn:hover { background-color: var(--teal); transform: scale(1.1); }
+
+.caso-info { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
+
+.caso-tag {
+  display: inline-block; align-self: flex-start;
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.75rem; font-weight: 700;
+  color: var(--teal); background-color: rgba(45,161,152,0.1);
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 12px;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+
+.caso-info h3 {
+  font-family: 'PlusJakarta', sans-serif; font-size: 1.25rem; font-weight: 800;
+  color: var(--azul-oscuro); margin-bottom: 10px; line-height: 1.3;
+}
+
+.caso-info p {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.95rem;
+  color: rgba(13,69,120,0.6); line-height: 1.6;
+}
+
+.caso-horizontal {
+  grid-column: 1 / -1; flex-direction: row;
+  align-items: stretch; min-height: 320px;
+}
+
+.caso-horizontal .caso-video { flex: 1.5; aspect-ratio: auto; }
+.caso-horizontal .caso-info  { flex: 1; padding: 40px; justify-content: center; }
+
+/* ============================================
+   TESTIMONIOS — Gris Suave
+   ============================================ */
+#testimonios { padding: 60px 0; background-color: var(--gris-suave); }
+
+.testimonios-contenedor { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+.testimonios-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; margin-top: 30px;
+}
+
+.testimonio-card {
+  background-color: var(--blanco); border: 1px solid rgba(13,69,120,0.06);
+  border-radius: var(--radio-md); padding: 24px;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.testimonio-card:hover { transform: translateY(-4px); box-shadow: var(--sombra-media); }
+
+.testimonio-top { display: flex; align-items: center; gap: 12px; }
+
+.testimonio-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background-color: var(--azul-oscuro);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--blanco); font-size: 0.8rem; font-weight: 700; flex-shrink: 0;
+}
+
+.testimonio-top strong {
+  display: block; font-size: 0.9rem; color: var(--azul-oscuro); line-height: 1.2;
+}
+
+.testimonio-rol { font-size: 0.75rem; color: var(--teal); }
+
+.testimonio-estrellas {
+  display: flex; gap: 2px; color: #F5A623;
+  font-size: 0.7rem; margin-left: auto;
+}
+
+.testimonio-texto {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.9rem;
+  color: rgba(13,69,120,0.65); line-height: 1.6;
+}
+
+/* ============================================
+   CITAS — Formulario / Blanco
+   ============================================ */
+#citas { padding: 80px 0; background-color: var(--blanco); }
+
+.citas-contenedor-amplio {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  display: grid; grid-template-columns: 1fr 1.2fr;
+  gap: 60px; align-items: start;
+}
+
+.citas-info .servicios-subtitulo { margin-bottom: 30px; }
+
+.citas-opciones { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.cita-btn-wa {
+  display: inline-flex; align-items: center; gap: 10px;
+  background-color: #25D366; color: var(--blanco);
+  font-family: 'PlusJakarta', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  padding: 0.8rem 1.6rem; border-radius: var(--radio-sm);
+  text-decoration: none; transition: background-color 0.3s, transform 0.2s;
+}
+
+.cita-btn-wa:hover { background-color: #1ebe5a; transform: scale(1.04); }
+
+.cita-btn-tel {
+  display: inline-flex; align-items: center; gap: 10px;
+  background-color: transparent; border: 2px solid var(--azul-oscuro);
+  color: var(--azul-oscuro); font-family: 'PlusJakarta', sans-serif;
+  font-size: 0.95rem; font-weight: 700; padding: 0.8rem 1.6rem;
+  border-radius: var(--radio-sm); text-decoration: none; transition: all 0.3s;
+}
+
+.cita-btn-tel:hover { background-color: var(--azul-oscuro); color: var(--blanco); }
+
+.citas-formulario {
+  background-color: var(--crema); padding: 36px;
+  border-radius: var(--radio-md); display: grid;
+  grid-template-columns: 1fr 1fr; gap: 18px;
+  box-shadow: var(--sombra-suave);
+}
+
+.form-grupo { display: flex; flex-direction: column; gap: 6px; }
+.form-grupo-full { grid-column: 1 / -1; }
+
+.form-grupo label {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.85rem;
+  font-weight: 600; color: var(--azul-oscuro);
+}
+
+.form-grupo input,
+.form-grupo select,
+.form-grupo textarea {
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.95rem;
+  padding: 12px 14px; border: 1px solid rgba(13,69,120,0.15);
+  border-radius: var(--radio-sm); background-color: var(--blanco);
+  color: var(--azul-oscuro); transition: border-color 0.3s; outline: none;
+}
+
+.form-grupo input:focus,
+.form-grupo select:focus,
+.form-grupo textarea:focus { border-color: var(--teal); }
+
+.form-grupo textarea { resize: vertical; min-height: 80px; }
+
+.form-btn-enviar {
+  grid-column: 1 / -1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  background-color: var(--rosa); color: var(--blanco);
+  font-family: 'PlusJakarta', sans-serif; font-size: 1rem; font-weight: 700;
+  padding: 0.9rem 2rem; border: none; border-radius: var(--radio-sm);
+  cursor: pointer; transition: background-color 0.3s, transform 0.2s;
+}
+
+.form-btn-enviar:hover { background-color: var(--coral); transform: scale(1.02); }
+
+/* ============================================
+   UBICACIÓN — Crema
+   ============================================ */
+#ubicacion { padding: 80px 0; background-color: var(--crema); }
+
+.ubicacion-contenedor {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+  display: grid; grid-template-columns: 1fr 1.5fr;
+  gap: 60px; align-items: start;
+}
+
+.ubicacion-info .servicios-titulo { margin-bottom: 30px; }
+
+.ubicacion-dato {
+  display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px;
+}
+
+.ubicacion-dato i { font-size: 1.3rem; color: var(--teal); margin-top: 2px; flex-shrink: 0; }
+
+.ubicacion-dato strong {
+  display: block; font-size: 0.9rem; font-weight: 700;
+  color: var(--azul-oscuro); margin-bottom: 4px;
+}
+
+.ubicacion-dato p, .ubicacion-dato a {
+  font-size: 1rem; color: rgba(13,69,120,0.6); text-decoration: none;
+}
+
+.ubicacion-dato a:hover { color: var(--teal); }
+
+.ubicacion-mapa iframe {
+  width: 100%; height: 400px; border: 0;
+  border-radius: var(--radio-md); box-shadow: var(--sombra-media);
+}
+
+/* ============================================
+   FOOTER — Azul Oscuro
+   ============================================ */
+#footer { background-color: var(--azul-oscuro); color: var(--blanco); padding: 60px 0 0; }
+
+.footer-contenedor {
+  max-width: 1200px; margin: 0 auto; padding: 0 2rem 40px;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px;
+}
+
+.footer-logo { height: 100px; width: auto; margin-bottom: 16px; filter: brightness(0) invert(1); }
+
+.footer-marca p {
+  font-size: 0.95rem; color: rgba(255,255,255,0.65);
+  line-height: 1.7; margin-bottom: 20px; max-width: 280px;
+}
+
+.footer-redes { display: flex; gap: 12px; }
+
+.footer-redes a {
+  width: 38px; height: 38px; background-color: rgba(255,255,255,0.1);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: var(--blanco); font-size: 0.95rem; text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.footer-redes a:hover { background-color: var(--teal); }
+
+.footer-links h4, .footer-contacto h4 {
+  font-size: 1rem; font-weight: 700; margin-bottom: 20px; color: var(--blanco);
+}
+
+.footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.footer-links a {
+  color: rgba(255,255,255,0.65); text-decoration: none;
+  font-size: 0.95rem; transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--teal-claro); }
+
+.footer-contacto p {
+  font-size: 0.95rem; color: rgba(255,255,255,0.65);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+
+.footer-contacto i { color: var(--teal-claro); }
+
+.footer-btn {
+  display: inline-block; margin-top: 16px;
+  background-color: var(--rosa); color: var(--blanco);
+  font-family: 'PlusJakarta', sans-serif; font-size: 0.9rem; font-weight: 700;
+  padding: 0.7rem 1.6rem; border-radius: var(--radio-sm);
+  text-decoration: none; transition: background-color 0.3s;
+}
+
+.footer-btn:hover { background-color: var(--coral); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1); padding: 20px 2rem;
+  text-align: center; font-size: 0.85rem; color: rgba(255,255,255,0.4);
+}
+
+/* ============================================
+   WHATSAPP FLOTANTE
+   ============================================ */
+.whatsapp-flotante {
+  position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+  width: 58px; height: 58px; background-color: #25D366;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: var(--blanco); font-size: 1.8rem; text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: pulseWA 2.5s infinite;
+}
+
+.whatsapp-flotante:hover {
+  transform: scale(1.12); box-shadow: 0 6px 28px rgba(37,211,102,0.6); animation: none;
+}
+
+@keyframes pulseWA {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45); }
+  50%       { box-shadow: 0 4px 30px rgba(37,211,102,0.75); }
+}
+
+/* ============================================
+   ANIMACIONES GLOBALES
+   ============================================ */
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.nav-toggle.abierto span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.abierto span:nth-child(2) { opacity: 0; }
+.nav-toggle.abierto span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ============================================
+   ACCESIBILIDAD — Movimiento reducido
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-texto { opacity: 1; transform: none; }
+  .stat-item  { opacity: 1; transform: none; }
+}
+
+/* ============================================
+   RESPONSIVO — TABLETS (max-width: 992px)
+   ============================================ */
+@media screen and (max-width: 992px) {
+  .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stat-item:not(:last-child)::after { display: none; }
+
+  .servicios-split { grid-template-columns: 1fr; }
+  .servicios-imagen { min-height: 320px; }
+  .servicios-grid { grid-template-columns: repeat(3, 1fr); }
+  .servicios-cards { padding: 36px 28px; }
+
+  .lab-contenedor { flex-direction: column-reverse; gap: 50px; }
+  .lab-portada { width: 100%; }
+  .lab-portada img { height: 380px; }
+  .lab-contenido { width: 100%; align-items: center; text-align: center; }
+  .lab-textos { text-align: center; }
+  .lab-descripcion { margin: 0 auto; text-align: center; }
+  .lab-grid-interactive { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .lab-cta { text-align: center; }
+
+  .testimonios-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .casos-bento-grid { grid-template-columns: repeat(2, 1fr); }
+  .caso-horizontal { flex-direction: column; min-height: auto; }
+  .caso-horizontal .caso-video { width: 100%; aspect-ratio: 16 / 9; }
+  .caso-horizontal .caso-info { padding: 24px; }
+
+  .citas-contenedor-amplio { grid-template-columns: 1fr; gap: 40px; }
+
+  .footer-contenedor { grid-template-columns: 1fr 1fr; gap: 30px; }
+  .ubicacion-contenedor { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* ============================================
+   RESPONSIVO — MÓVILES (max-width: 768px)
+   ============================================ */
+@media screen and (max-width: 768px) {
+  :root { --top-bar-height: 0px; --navbar-height: 75px; }
+  html { scroll-padding-top: 75px; }
+  body { padding-top: 75px; }
+
+  #top-bar { display: none; }
+  #navbar { top: 0; width: 100%; }
+  .nav-contenedor { height: 75px; }
+  .nav-logo img { height: 55x; }
+  .nav-btn { display: none; }
+  .nav-toggle { display: flex; }
+
+  .nav-menu {
+    display: none; position: absolute; top: 75px; left: 0; width: 100%;
+    background-color: var(--blanco); border-top: 1px solid rgba(13,69,120,0.08);
+    padding: 2rem; box-shadow: var(--sombra-media);
+  }
+  .nav-menu.abierto { display: flex; flex-direction: column; align-items: flex-start; }
+  .nav-menu ul { flex-direction: column; gap: 1.5rem; width: 100%; align-items: flex-start; }
+  .nav-menu a { font-size: 1.2rem; width: 100%; padding: 10px 0; }
+
+  #hero-moderno { min-height: 85vh; }
+  .hero-texto { bottom: 60px; left: 5%; width: 90%; }
+  .titulo-bold  { font-size: 2.8rem; }
+  .titulo-light { font-size: 2.2rem; }
+  .hero-subtitulo { font-size: 0.95rem; }
+  .hero-btn-outline { align-self: flex-start; }
+
+  #ejes-principales { padding: 40px 0; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .stat-num  { font-size: 30px; }
+  .stat-icon { width: 42px; height: 42px; font-size: 18px; }
+
+  .servicios-imagen { min-height: 260px; }
+  .servicios-imagen-contenido { padding: 28px 20px; }
+  .servicios-imagen-contenido .servicios-titulo { font-size: 1.8rem; }
+  .servicios-cards { padding: 28px 16px; }
+  .servicios-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  #laboratorio { padding: 60px 0; }
+  .lab-portada img { height: 280px; }
+  .lab-textos .servicios-titulo { font-size: 2.2rem; }
+  .lab-grid-interactive { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .lab-card-interactive { padding: 14px 10px; }
+  .lab-card-nombre { font-size: 0.85rem; }
+  .lab-card-desc { font-size: 0.7rem; }
+
+  .testimonios-grid { grid-template-columns: 1fr; }
+
+  #casos { padding: 60px 0; }
+  .casos-bento-grid { grid-template-columns: 1fr; }
+  .caso-vertical .caso-video { aspect-ratio: 4 / 5; }
+
+  .citas-formulario { grid-template-columns: 1fr; padding: 24px; }
+  .citas-opciones { flex-direction: column; align-items: stretch; }
+  .cita-btn-wa, .cita-btn-tel { justify-content: center; }
+
+  .footer-contenedor { grid-template-columns: 1fr; gap: 30px; }
+  .whatsapp-flotante { width: 50px; height: 50px; font-size: 1.5rem; bottom: 20px; right: 20px; }
+}
+
+/* ============================================
+   RESPONSIVO — MÓVILES PEQUEÑOS (max-width: 480px)
+   ============================================ */
+@media screen and (max-width: 480px) {
+  .titulo-bold  { font-size: 2.2rem; }
+  .titulo-light { font-size: 1.8rem; }
+  .hero-texto { bottom: 40px; }
+  .stats-inner { grid-template-columns: 1fr 1fr; gap: 4px; }
+  .stat-item { padding: 14px 10px; }
+  .stat-num  { font-size: 26px; }
+  .stat-icon { width: 38px; height: 38px; font-size: 16px; }
+  .stat-title { font-size: 12px; }
+  .stat-label { font-size: 11px; }
+  .servicios-titulo { font-size: 2rem; }
+  .servicios-grid { grid-template-columns: 1fr; }
+  .lab-grid-interactive { grid-template-columns: 1fr; }
+  .caso-info h3 { font-size: 1.1rem; }
+  .caso-info p  { font-size: 0.85rem; }
+  .testimonio-texto { font-size: 0.95rem; }
+}
